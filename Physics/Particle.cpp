@@ -3,7 +3,7 @@
 
 void Particle::Update(float deltaTime)
 {
-	if (mass != 0) // plane wil have mass = 0 -> block movement
+	if (mass != 0) // plane will have mass = 0 -> block movement
 	{
 		acceleration = forceOnObj / mass;
 		position = position + (velocity * deltaTime);

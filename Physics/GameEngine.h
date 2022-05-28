@@ -32,7 +32,6 @@ private:
 		
 public:
 	void InitEngine(int argc, char** argv, const char* windowTitle, int width, int height); 	//The function to set up / initialize Opengl and GLUT and the function to get things ready(but not run).
-	void DeleteObject();
 		void AddGameObject(GameObject*);	 //	A way to add objects to the game world.
 		void StartEngine(); 	//	Start the game world.
 		GameEngine();

@@ -26,7 +26,7 @@ bool SphereCollider::CollideCheck(Collider* collider2, CollisionData& collisionI
 			// collision = true
 			std::cout << "Colliding " << std::endl;
 
-			collisionInfo.penetrationDepth = (GetRadius() + collider2->GetRadius()) - glm::distance(position, collider2->position);
+			collisionInfo.penetrationDepth = abs(GetRadius() + collider2->GetRadius()) - glm::distance(position, collider2->position);
 			collisionInfo.collisionNormal = glm::normalize(position - collider2->position);
 			collisionInfo.collisionPoint = collisionInfo.collisionNormal * radius;
 
@@ -78,7 +78,7 @@ bool SphereCollider::CollideCheck(Collider* collider2, CollisionData& collisionI
 		{
 			std::cout << "Colliding AABB - Sphere" << std::endl;
 
-			collisionInfo.penetrationDepth = (GetRadius() + collider2->GetRadius()) - glm::distance(position, collider2->position);
+			collisionInfo.penetrationDepth = abs(GetRadius() + collider2->GetRadius()) - glm::distance(position, collider2->position);
 			collisionInfo.collisionNormal = glm::normalize(collider2->position - position);
 			collisionInfo.collisionPoint = collisionPoint;
 			return true;

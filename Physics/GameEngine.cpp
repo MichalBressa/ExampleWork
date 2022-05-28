@@ -19,62 +19,7 @@ int GameEngine::newTimeSinceStart = 0;
 	 float deltaTime = (newTimeSinceStart - oldTimeSinceStart);
 	 deltaTime /= 1000.f;
 
-
-	 /*
-	 Broad Phase 
-	  I probably not gonna have enough time to implement this but I think it's worth to leave my idea for it here
-	  it is very simple broad phase as it divides area into only 4 sub-areas but with a few more if statments could be more complex
-
-
-	  O      |		O
-         1   |	2
-	  O------A------O
-	     3   |	4
-	  O      |      O
-
-
-	 get a vec3 point in the middle to separate area into 4 squares (lets can the point A, and O are the holes)
-	 
-	 need for vectors<> for objects, one for every sub-area
-	 + function that will update where object belongs when it is moved
-
-	 Logic is:
-	 compare A.position to objects position. Only in 2D at the moment
-	 (r = radius, or half of the sides lenght)
-
-	 1. check if it is in the middle so belong to more than one zone
-
-	 if (objPos.x + r >= A.x && objPos.x - r <= A.x){
-		obj is in the middle
-	 }
-
-	 if (objPos.z + r >= A.z && objPos.z -r <= A.z)
-	 {
-		is in the middle-middle like A
-	 }
-	 else if (objPoz.z + r > A.z && objPos.z - r > A.z){
-		add to zone 1 and 2
-	 } else {
-	 add to 3, 4
-	 }
-
-
-	 if (objPos.z + r >= A.z && Pos.Z -r <= A.z){
-		if (objPos.x + r < A.x) -> add to 1, 3
-		if (objPos.x - r < A.x) -> add to 2, 4
-	 }
-
-	 Cases then object belong to only one area
-	 objPos.z - r > A.z && objPos.x + r < A.x  -> 1
-	 objPos.z - r > A.z && objPos.x - r > A.x  -> 2
-	 objPos.z + r < A.z && objPos.x + r < A.x  -> 3
-	 objPos.z + r > A.z && objPos.x - r > A.x  -> 4
-	 
-	 
-	 */
-
-
-
+	 // check if collisions occur
 	 for (int i =0; i < objects.size()-1; i++) 
  	 {
 		 for (int j = i; j < objects.size(); j++) 
@@ -86,7 +31,7 @@ int GameEngine::newTimeSinceStart = 0;
 				 {
 					 info.obj1 = objects[i];
 					 info.obj2 = objects[j];
-
+					 // if there is a collision -> add it to collisionDataVec vector so that it will be resolved later
 					 collisionDataVec.push_back(info);
 				 }
 				 
@@ -114,13 +59,17 @@ int GameEngine::newTimeSinceStart = 0;
 			 float impulse = (-1 * glm::dot(relativeVelocity, collisionDataVec[i].collisionNormal) * (1 + coEfficientOfRestitution))
 				 / (glm::dot(collisionDataVec[i].collisionNormal, collisionDataVec[i].collisionNormal) * (1 / collisionDataVec[i].obj1->particlePtr->GetMass() + 1 / collisionDataVec[i].obj2->particlePtr->GetMass()));
 
+			 glm::vec3 Va;
+		     glm::vec3 Vb;
 
-			 glm::vec3 Va = collisionDataVec[i].obj1->particlePtr->GetVelocity() + (impulse / collisionDataVec[i].obj1->particlePtr->GetMass()) * collisionDataVec[i].collisionNormal;
+			 if (impulse > 0) 
+			 {
+				Va = collisionDataVec[i].obj1->particlePtr->GetVelocity() + (impulse / collisionDataVec[i].obj1->particlePtr->GetMass()) * collisionDataVec[i].collisionNormal;
 
-			 glm::vec3 Vb = collisionDataVec[i].obj2->particlePtr->GetVelocity() - (impulse / collisionDataVec[i].obj2->particlePtr->GetMass()) * collisionDataVec[i].collisionNormal;
-
+				Vb = collisionDataVec[i].obj2->particlePtr->GetVelocity() - (impulse / collisionDataVec[i].obj2->particlePtr->GetMass()) * collisionDataVec[i].collisionNormal;
 			 
-			 if (collisionDataVec[i].obj1->particlePtr->GetMass() != 0) 
+				
+				if (collisionDataVec[i].obj1->particlePtr->GetMass() != 0) 
 			 {
 				collisionDataVec[i].obj1->particlePtr->SetVelocity(Va);
 			 }
@@ -128,6 +77,10 @@ int GameEngine::newTimeSinceStart = 0;
 			 {
 				 collisionDataVec[i].obj2->particlePtr->SetVelocity(Vb);
 			 }
+			 }
+			 
+			 
+
 
 
 		 }
@@ -247,22 +200,6 @@ void GameEngine::InitEngine(int argc, char** argv, const char* windowTitle, int 
 			std::cout << "Key pressed: " << key << " : " << GameObject::specialKeys[key] << std::endl;
 		}
 	);
-
-}
-
-void GameEngine::DeleteObject()
-{
-	/*
-	auto it = std::find_if(objects.begin(), objects.end(), [&_name](const GameObject& obj) {return obj.name == _name; });
-
-		if (it != objects.end())
-		{
-			// found element. it is an iterator to the first matching element.
-			// if you really need the index, you can also get it:
-			auto index = std::distance(objects.begin(), it);
-		}
-*/
-
 
 }
 
