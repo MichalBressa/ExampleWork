@@ -48,12 +48,12 @@ void RotatingSquare::Update(float deltaTime)
 
 	if (GameObject::specialKeys[GLUT_KEY_RIGHT] == true)
 	{
-		rigidbodyPtr->AddAngularForce(glm::vec3(2.0f, 0.0f, 0.0f), glm::vec3(-0.5f, -0.5f, 0.0f) * speed);
+		rigidbodyPtr->AddAngularForce(glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(-0.5f, -0.5f, 0.0f) * speed);
 	}
 
 	if (GameObject::specialKeys[GLUT_KEY_LEFT] == true)
 	{
-		rigidbodyPtr->AddAngularForce(glm::vec3(-2.0f, 0.0f, 0.0f), glm::vec3(0.5f, 0.5f, 0.0f) * speed);
+		rigidbodyPtr->AddAngularForce(glm::vec3(-1.0f, 0.0f, 0.0f), glm::vec3(-0.5f, -0.5f, 0.0f) * speed);
 	}
 
     rigidbodyPtr->Update(0.01f);

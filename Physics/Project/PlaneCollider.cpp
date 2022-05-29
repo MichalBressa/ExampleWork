@@ -16,7 +16,8 @@ bool PlaneCollider::CollideCheck(Collider* collider2, CollisionData& collisionIn
 		if (glm::distance(closestPoint, collider2->position)  <= collider2->GetRadius()) 
 		{
 			collisionInfo.penetrationDepth = abs (glm::distance(closestPoint, collider2->position) - collider2->GetRadius());
-			collisionInfo.collisionNormal = planeDirection;
+			//collisionInfo.collisionNormal = glm::normalize(collider2->position - closestPoint); //planeDirection;
+			// need velocity as collision normal -> but its not in the collider
 			collisionInfo.collisionPoint = closestPoint;
 			std::cout << "Colliding with sphere" << std::endl;
 			return true;

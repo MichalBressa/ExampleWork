@@ -42,45 +42,47 @@ bool SphereCollider::CollideCheck(Collider* collider2, CollisionData& collisionI
 		minA = collider2->position - glm::vec3(collider2->GetRadius(), collider2->GetRadius(), collider2->GetRadius());
 		maxA = collider2->position + glm::vec3(collider2->GetRadius(), collider2->GetRadius(), collider2->GetRadius());
 
-		collisionPoint = position;
+		//collisionPoint; //= position;
 
 		// clamp values -> determin where is sphere compared to AABB and get collision point
 		// X axis
-		if (collisionPoint.x < minA.x)
+		/*
+		if (position.x < minA.x)
 		{
 			collisionPoint.x = minA.x;
 		}
-		if (collisionPoint.x > maxA.x)
+		if (position.x > maxA.x)
 		{
 			collisionPoint.x = maxA.x;
 		}
 		// Y axis
-		if (collisionPoint.y < minA.y)
+		if (position.y < minA.y)
 		{
 			collisionPoint.y = minA.y;
 		}
-		if (collisionPoint.y > maxA.y)
+		if (position.y > maxA.y)
 		{
 			collisionPoint.y = maxA.y;
 		}
 		// Z axis
-		if (collisionPoint.z < minA.z)
+		if (position.z < minA.z)
 		{
 			collisionPoint.z = minA.z;
 		}
-		if (collisionPoint.z > maxA.z)
+		if (position.z > maxA.z)
 		{
 			collisionPoint.z = maxA.z;
-		}
+		}*/
+
 
 		// actual check for collision
-		if (glm::distance(collisionPoint, position) <= radius)
+		if (glm::distance(collider2->position, position) <= radius + collider2->GetRadius())
 		{
 			std::cout << "Colliding AABB - Sphere" << std::endl;
 
 			collisionInfo.penetrationDepth = abs(GetRadius() + collider2->GetRadius()) - glm::distance(position, collider2->position);
 			collisionInfo.collisionNormal = glm::normalize(collider2->position - position);
-			collisionInfo.collisionPoint = collisionPoint;
+			collisionInfo.collisionPoint = position;  //collider2->position - position;//collisionPoint;
 			return true;
 		}
 
@@ -88,26 +90,10 @@ bool SphereCollider::CollideCheck(Collider* collider2, CollisionData& collisionI
 		return false;
 
 	}
-	else if (collider2->id == 3) // Plane
+	/*else if (collider2->id == 3) // Plane
 	{
-
-		return collider2->CollideCheck(this, collisionInfo);
-		/*glm::vec3 posToPos = collider2->position - position;
-
-		float distance = glm::dot(posToPos, planeNormal);
-
-		glm::vec3 closestPoint = collider2->position - planeNormal * distance;
-
-		if (glm::distance(closestPoint, collider2->position) - collider2->GetRadius() <= collider2->GetRadius())
-		{
-			collisionInfo.penetrationDepth = abs(glm::distance(closestPoint, collider2->position) - collider2->GetRadius());
-			collisionInfo.collisionNormal = glm::normalize(closestPoint - collider2->position);
-			collisionInfo.collisionPoint = closestPoint;
-
-			return true;
-		}
-		return false;*/
-	}
+		this should be handled by the plane collider
+	}*/
 
 
 }

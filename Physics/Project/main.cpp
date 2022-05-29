@@ -12,7 +12,7 @@
 
 
 //Create some objects
-GameObject* cube = new Cube(glm::vec3(-2, 0, 0));
+GameObject* cube = new Cube(glm::vec3(-1.5, 0, 0));
 GameObject* cube2 = new Cube(glm::vec3(3, 3, 1));
 
 GameObject* sphere1 = new Sphere(glm::vec3(-3, 0, 0), 0.5f);
@@ -40,17 +40,16 @@ int main(int argc, char** argv)
 	//Initialize the engine
 		engine.InitEngine(argc, argv, "GameEngine Window", 600, 600);
 
-	//Add the objects to the engine(so it actually knows about the objects!)
-		//engine.AddGameObject(cube);
+	//Add the objects to the engine
+		engine.AddGameObject(cube);
 		//engine.AddGameObject(cube2);
 		//engine.AddGameObject(rotating);
-		engine.AddGameObject(player1); // sphere player
-		engine.AddGameObject(sphere1);
-		//engine.AddGameObject(cubeplayer);
 		//engine.AddGameObject(plane);
+		//engine.AddGameObject(sphere1);
+		//engine.AddGameObject(cubeplayer);
+		engine.AddGameObject(player1); // sphere player
 
-
-	//Start the engine(which causes the game loop to occur with your functions - Drawing, Updating etc.)
+	//causes the game loop to occur with functions like Drawing, Updating etc
 		engine.StartEngine();
 
 	return 0;

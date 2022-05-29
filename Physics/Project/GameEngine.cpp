@@ -32,6 +32,16 @@ int GameEngine::newTimeSinceStart = 0;
 					 info.obj1 = objects[i];
 					 info.obj2 = objects[j];
 					 // if there is a collision -> add it to collisionDataVec vector so that it will be resolved later
+
+					 if (info.obj1->colliderPtr->id == 3) 
+					 {
+						 info.collisionNormal = glm::normalize(info.obj2->particlePtr->GetVelocity());
+					 }
+					 if (info.obj2->colliderPtr->id == 3) 
+					 {
+						 info.collisionNormal = glm::normalize(info.obj1->particlePtr->GetVelocity());
+					 }
+					
 					 collisionDataVec.push_back(info);
 				 }
 				 
@@ -70,13 +80,13 @@ int GameEngine::newTimeSinceStart = 0;
 			 
 				
 				if (collisionDataVec[i].obj1->particlePtr->GetMass() != 0) 
-			 {
-				collisionDataVec[i].obj1->particlePtr->SetVelocity(Va);
-			 }
-			 if (collisionDataVec[i].obj2->particlePtr->GetMass() != 0)
-			 {
-				 collisionDataVec[i].obj2->particlePtr->SetVelocity(Vb);
-			 }
+				{
+					collisionDataVec[i].obj1->particlePtr->SetVelocity(Va);
+				}
+				if (collisionDataVec[i].obj2->particlePtr->GetMass() != 0)
+				{
+					 collisionDataVec[i].obj2->particlePtr->SetVelocity(Vb);
+				}
 			 }
 			 
 			 

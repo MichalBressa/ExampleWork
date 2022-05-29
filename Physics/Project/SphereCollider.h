@@ -18,7 +18,7 @@ public:
 		radius = _radius;
 	};
 
-	// made as part of labs
+	// made for fun
 	float DotProduct(glm::vec3 x, glm::vec3 y);
 	glm::vec3 CrossProduct(glm::vec3 x, glm::vec3 y);
 
